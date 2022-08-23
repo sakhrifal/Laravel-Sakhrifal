@@ -17,17 +17,25 @@ class UpdateController extends Controller
     }
 
     public function update ($id, Request $request) {
-        $image = $request->file('inputFoto')->store('post-image');
+        $validatedData = $request->validate([
+            'fullname' => ['required','min:3','max:255'],
+            'email' => ['required', 'email'],
+            'alamat' => ['required', 'max:255'],
+            'inputFoto' => ['file','max:1024']
+        ]);
+        $validatedData['user_id']=auth()->user()->id;
         $pegawai = pegawai::find($id);
         $pegawai->name = $request->fullname;
         $pegawai->email = $request->email;
         $pegawai->alamat = $request->alamat;
-        $pegawai->gambar = $image;
-        if($request->oldImage){
-            Storage::delete($request->oldImage);
+        if($request->file('inputFoto')){
+            $pegawai->gambar =  $request->file('inputFoto')->store('post-image'); 
+            if($request->oldImage){
+                Storage::delete($request->oldImage);
+            }
         }
         $pegawai->update();
-        return redirect('/');
+        return redirect('/')->with('status','Updated....!!!');
     }
 
     public function delete ($id) { 
@@ -36,6 +44,6 @@ class UpdateController extends Controller
             Storage::delete($pegawai->gambar);
         }
         $pegawai->delete();
-        return redirect('/');
+        return redirect('/')->with('status','Deleted....!!!');
     }
 }

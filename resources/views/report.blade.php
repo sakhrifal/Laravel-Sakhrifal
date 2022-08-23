@@ -4,47 +4,12 @@
 @section('head') @endsection   
 
 @section('main')
-{{-- <div class="container">
-    <div class="card mt-5">
-        <div class="card-header text-center">
-            Data Pegawai
-        </div>
-        <div class="card-header">
-            <form action="/logout" method="post">
-                @csrf
-                <button class="btn btn-primary d-block ms-auto">Logout</button>
-            </form>
-        </div>
-        <div class="card-body">
-            <a href="/insert" class="btn btn-primary">Input Pegawai Baru</a>
-            <br/>
-            <br/>
-            <table class="table table-bordered table-hover table-striped">
-                <thead>
-                    <tr>
-                        <th>Nama</th>
-                        <th>Alamat</th>
-                        <th>Email</th>
-                        <th>OPSI</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($pegawais as $pegawai)
-                    <tr>
-                        <td>{{ $pegawai->name }}</td>
-                        <td>{{ $pegawai->alamat }}</td>
-                        <td>{{ $pegawai->email }}</td>
-                        <td>
-                            <a href="/update/{{ $pegawai->id }}" class="btn btn-warning">Edit</a>
-                            <a href="/hapus/{{ $pegawai->id }}" class="btn btn-danger">Hapus</a>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div> --}}
+@if (session()->has('status'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('status') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
     <div class="table-responsive">
         <table class="table table-striped table-sm">
             <thead>

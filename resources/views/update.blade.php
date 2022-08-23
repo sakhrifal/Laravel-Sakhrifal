@@ -6,24 +6,37 @@
 @section('main')
     <div class="row g-5">
         <div class="col-lg-12">
-            <form class="needs-validation" action="/update/{{ $pegawai->id }}" method="post" novalidate enctype="multipart/form-data">
+            <form class="needs-validation" action="/update/{{ $pegawai->id }}" method="post" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 {{ method_field('PUT') }}
             <div class="row g-3">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="fullName" name="fullname" value="{{ $pegawai->name }}" value="" required>
+                    <input type="text" class="form-control @error('fullname') is-invalid @enderror" id="fullName" name="fullname" value="{{ $pegawai->name }}">
                     <label for="fullName">Full Name</label>
+                    @error('fullname')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
                 
                 <div class="form-floating">
-                    <input type="email" class="form-control" name="email" id="email" value="{{ $pegawai->email }}" required>
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ $pegawai->email }}">
                     <label for="email">Email</label>
+                    @error('email')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
-                
-
                 <div class="form-floating">
-                    <input type="text" class="form-control" name="alamat" id="alamat" value="{{ $pegawai->alamat }}" required>
+                    <input type="text" class="form-control @error('alamat') is-invalid @enderror" name="alamat" id="alamat" value="{{ $pegawai->alamat }}">
                     <label for="alamat">Alamat</label>
+                    @error('alamat')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label for="inputFoto" class="form-label">Input Foto</label>
@@ -33,7 +46,12 @@
                     @else
                         <img class="img-preview img-fluid mb-3 col-sm-5">
                     @endif
-                        <input class="form-control" type="file" id="inputFoto" name="inputFoto" required onchange="previewImage()">
+                        <input class="form-control @error('inputFoto') is-invalid @enderror" type="file" id="inputFoto" name="inputFoto" onchange="previewImage()">
+                        @error('inputFoto')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                   </div>
                 <hr class="my-4">
 
